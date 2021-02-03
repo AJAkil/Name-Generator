@@ -31,6 +31,9 @@ class _RandomWordState extends State<RandomWords> {
       appBar: AppBar(
         title: Text('Random Names for Fun'),
         centerTitle: true,
+        actions: [
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)
+        ],
       ),
       body: _buildNames(),
     );
@@ -79,4 +82,38 @@ class _RandomWordState extends State<RandomWords> {
       },
     );
   }
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+
+        builder: (BuildContext context) {
+
+          final tiles = _saved.map((WordPair pair) {
+            return ListTile(
+              title: Text(
+                pair.asCamelCase,
+                style: _biggerFont,
+              ),
+            );
+          });
+
+          // this ListTile.dividedTiles create a divided tiles automatically.
+          final dividedTiles = ListTile.divideTiles(
+            context: context,
+            tiles: tiles,
+          ).toList();
+
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Saved Suggestions'),
+              centerTitle: true,
+            ),
+            body: ListView(children: dividedTiles),
+          );
+        },
+      ),
+    );
+  }
 }
+
