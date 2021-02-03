@@ -21,11 +21,9 @@ class RandomWords extends StatefulWidget {
 }
 
 class _RandomWordState extends State<RandomWords> {
-
-  final  _saved = Set<WordPair>(); // a set for saving the favorite word pairs
+  final _saved = Set<WordPair>(); // a set for saving the favorite word pairs
   final List<WordPair> _names = <WordPair>[];
   final TextStyle _biggerFont = const TextStyle(fontSize: 20);
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +72,11 @@ class _RandomWordState extends State<RandomWords> {
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
+      onTap: () {
+        setState(() {
+          alreadySaved ? _saved.remove(pair) : _saved.add(pair);
+        });
+      },
     );
   }
 }
